@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="CSS/style.css" />
+    <script src="JavaScript/javascript busqueda.js" defer></script>
+    <script src="JavaScript/javascript inicio.js" defer></script>
+    <title>Zeppeling™</title>
+  </head>
+  <body>
+    <header class="header-container">
+      <h1>Zeppeling™</h1>
+      <h5>Viaja a tu ritmo</h5>
+      <nav>
+        <ul class="sin-vinetas">
+          <li>
+            <a href="Login.html" class="nav-link">
+              <i class="fa fa-user"></i> Mi cuenta
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <section class="main-content">
+      <div class="row">
+        <div class="col-md-3 menu-lateral">
+          <div class="list-item">
+            <ul class="sin-vinetas">
+              <li onclick="navMenu(this,'home')" class="nav-item active">
+                <i class="fa fa-home"></i><span class="p-2">Inicio</span>
+              </li>
+              <li onclick="navMenu(this,'buscarCancion')" class="nav-item">
+                <i class="fa fa-search"></i><span class="p-2">Buscar</span>
+              </li>
+              <li onclick="navMenu(this,'playlist')" class="nav-item">
+                <i class="fa fa-rectangle-list"></i
+                ><span class="p-2">Tu Biblioteca</span>
+              </li>
+              <li onclick="navMenu(this,'crearPlaylists')" class="nav-item">
+                <i class="fa-solid fa-square-plus"></i
+                ><span class="p-2">Crear Playlist</span>
+              </li>
+            </ul>
+            <hr />
+          </div>
+        </div>
+        <div class="col-md-9 menu-actions">
+          <div id="home" class="content-menu">
+            <h5>Home</h5>
+            <div id="list-todas-canciones" class="row"></div>
+            <div id="contenedorCanciones" class="row"></div>
+            <div id="contenedorPlaylists" class="row mt-3"></div>
+            <h5>proximamente Playlists</h5>
+          </div>
+          <div id="buscarCancion" class="content-menu hidden">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control input-sm"
+                placeholder="Artistas o canciones"
+                onkeyup="buscarCanciones(this.value)"
+              />
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+            <div class="" id="resultados">
+              <h5>Resultados</h5>
+              <div id="list-resultados"></div>
+            </div>
+          </div>
+          <div id="playlist" class="content-menu hidden">
+            <h5>Tu Biblioteca</h5>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                id="nombreCancion"
+                class="form-control"
+                placeholder="Nombre de la canción"
+              />
+              <input
+                type="file"
+                id="archivoCancion"
+                class="form-control"
+                accept="audio/*"
+              />
+              <button class="btn btn-primary" onclick="agregarCancion()">
+                Agregar a la biblioteca
+              </button>
+            </div>
+            <ul id="listaBiblioteca" class="list-group"></ul>
+          </div>
+          <div id="crearPlaylists" class="content-menu hidden">
+            <h5>Crear Playlists</h5>
+            <!-- Campo para el nombre de la playlist -->
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                id="nombrePlaylist"
+                class="form-control"
+                placeholder="Nombre de la Playlist"
+              />
+            </div>
+            <!-- Lista de canciones disponibles para agregar -->
+            <div>
+              <h6>Selecciona canciones de tu Biblioteca:</h6>
+              <ul id="listaCancionesParaPlaylist" class="list-group"></ul>
+            </div>
+            <!-- Botón para crear la playlist -->
+            <div class="mt-3">
+              <button class="btn btn-primary" onclick="crearPlaylist()">
+                Crear Playlist
+              </button>
+            </div>
+            <!-- Sección para mostrar las playlists creadas -->
+            <div class="mt-5">
+              <h6>Playlists creadas:</h6>
+              <ul id="listaPlaylists" class="list-group"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 text-center">
+          <div class="row">
+            <div class="col-md-12 controls">
+              <i class="fa-solid fa-shuffle icon-pt-2 mx-3"></i>
+              <i class="fa-solid fa-backward-step icon-pt-3 mx-3"></i>
+              <i class="fa-solid fa-circle-play icon-pt-1 mx-3 play-button"></i>
+              <i class="fa-solid fa-forward-step icon-pt-3 mx-3"></i>
+              <i class="fa-solid fa-repeat icon-pt-2 mx-3"></i>
+            </div>
+            <div class="col-md-12 record mt-3">
+              <div class="audio-player">
+                <div class="time-current">0:00</div>
+                <div class="container-progress">
+                  <input
+                    type="range"
+                    class="progress"
+                    value="0"
+                    min="0"
+                    max="100"
+                  />
+                </div>
+                <audio id="audio"></audio>
+                <div class="time-duration">0:00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 controls">
+          <div class="mt-2">
+            <i class="iconVolume fa-solid fa-volume-high"></i>
+          </div>
+          <div class="slider-container mt-1">
+            <input
+              type="range"
+              class="volumeControl"
+              min="0"
+              max="100"
+              value="100"
+              oninput="updateProgress(this)"
+            />
+          </div>
+        </div>
+      </div>
+      <p>Todos los derechos reservados &copy; 2024 Zeppeling™</p>
+    </footer>
+  </body>
+</html>
